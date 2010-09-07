@@ -25,8 +25,6 @@
 
 // returns a Scene that contains the HSLevelSelectionScene as the only child
 +(id) scene;
-- (void) menuButtonPressed: (id) sender;
-- (void) addLockPanelToMenu:(NMPanelMenu*)menu;
-- (void) lockPanelPicked: (id) sender;
+- (void) levelPicked: (id) sender ;
 
 @end

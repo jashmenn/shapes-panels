@@ -8,29 +8,20 @@
  */
 
 #include "HCUPPanelScene.h"
-#import "HSGameScene.h"
 #import "NMPanelMenu.h"
 #import "NMPanelMenuItem.h"
-#import "GameController.h"
-#import "JSWorld.h"
 #import "PreviewScrollContainerView.h"
-#import "HSMenuScene.h"
-#import "JSNetworkManager.h"
-
-#ifdef LITE_VERSION
-#import "FlurryAPI.h"
-#endif
+#import "GoBackScene.h"
 
 // http://getsetgames.com/2009/08/21/cocos2d-and-uiscrollview/
 // http://blog.proculo.de/archives/180-Paging-enabled-UIScrollView-With-Previews.html
 
-@implementation HSLevelSelectionScene2
-@synthesize currentLockPanelName=currentLockPanelName_;
+@implementation HCUPPanelScene
 
 +(id) scene
 {
     CCScene *scene = [CCScene node];
-    HSLevelSelectionScene2 *layer = [HSLevelSelectionScene2 node];
+    HCUPPanelScene *layer = [HCUPPanelScene node];
     [scene addChild: layer];
     return scene;
 }
@@ -38,108 +29,70 @@
 -(id) init
 {
     if( (self=[super init] )) {
-        nextWorld_ = -1;
         transitioning_ = NO;
-
-        CCSpriteFrameCache* fcache = [CCSpriteFrameCache sharedSpriteFrameCache];
-        [fcache addSpriteFramesWithFile: @"panels-sheet-1.plist"];
-        [fcache addSpriteFramesWithFile: @"panels-sheet-2.plist"];
-        self.currentLockPanelName = @"n/a";
-
-#ifdef LITE_VERSION
-        [FlurryAPI logEvent:@"LevelSelectionScene"];
-#endif
-
+        // In the real world, you'd probably want to add all your panels to a
+        // zwoptex sprite sheet. You could pre-load the frame cache with
+        // something like this:
+        // CCSpriteFrameCache* fcache = [CCSpriteFrameCache sharedSpriteFrameCache];
+        // [fcache addSpriteFramesWithFile: @"panels-sheet-1.plist"];
     }
     return self;
 }
 
 - (void) onEnter 
 {
-    // CCLOG(@"======= HSLevelSelection onEnter");
     CGSize s = [[CCDirector sharedDirector] winSize];
 
-    CCSprite* bg = [CCSprite spriteWithFile:@"paper-background-2.png"];
-    bg.position = ccp(s.width/2, s.height/2);
-    [self addChild: bg];
+    { // background
+        CCSprite* bg = [CCSprite spriteWithFile:@"paper-background.png"];
+        bg.position = ccp(s.width/2, s.height/2);
+        [self addChild: bg];
+    }
 
+    // In your game this array would be created by a function that returns a
+    // list of worlds. In Jacob's Shapes we have a GameController that knows
+    // about each level.
+    NSArray* panelNames = [NSArray arrayWithObjects: 
+        @"amazon" @"arctic" @"brkfst" @"camp" @"city" nil;
+    int numPanels = [panelNames count];
+
+    // create an empty layer for us to work with
     CCLayer* panels = [CCLayer node];
-    CCLOG(@"p.x:%f p.y:%f", panels.position.x, panels.position.y);
-    // panels.position = ccp(s.width/2, s.height/2);
 
-    // create "all" panel
-    CCSprite* pane1 = [CCSprite spriteWithFile:@"main-menu-panel.png"];
-    CCSprite* pane2 = [CCSprite spriteWithFile:@"main-menu-panel-on.png"];
-    // pane1.opacity = 0;
-    NMPanelMenuItem* menuItem1 = [NMPanelMenuItem itemFromNormalSprite:pane1 selectedSprite:pane2 target:self selector:@selector(menuButtonPressed:)];
+    // The easiest way to add to a CCMenu dynamically is to start with one panel 
+    // and then add more later. (Anyone have advice on a better way to do this?)
+    NSString *firstPanelName = [NSString stringWithFormat: @"%@-panel.png", [panelNames objectAtIndex:0]];
+    CCSprite* pane1 = [CCSprite spriteWithFile:firstPanelName];
+    NMPanelMenuItem* menuItem1 = [NMPanelMenuItem itemFromNormalSprite:pane1 
+                                                        selectedSprite:pane1 
+                                                          activeSprite:pane1
+                                                        disabledSprite:pane1
+                                                                target:self 
+                                                              selector:@selector(levelPicked:)];
     menuItem1.world = 0;
-    menuItem1.name = @"blank";
-
+    menuItem1.name = [panelNames objectAtIndex:0];
     NMPanelMenu* menu = [NMPanelMenu menuWithItems: menuItem1, nil];
-    //CCSpriteFrameCache* fcache = [CCSpriteFrameCache sharedSpriteFrameCache];
 
-    for(int i=0; i < [JSWorld numWorlds]; i++) {
-        JSWorld* world = [JSWorld world: i];
-        // CCSprite* pane2 = [CCSprite spriteWithFile:[NSString stringWithFormat: @"%@-panel.png", world.name]];
-        CCSprite* pane2 = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat: @"%@-panel.png", world.name]];
-        // CCSprite* pane2_on = [CCSprite spriteWithFile:[NSString stringWithFormat: @"%@-panel-on.png", world.name]];
-
+    // Now add the rest of the panels
+    for(int i=1; i < numPanels; i++) {
+        NSString* currentName = [panelNames objectAtIndex:i];
+        CCSprite* pane2 = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat: @"%@-panel.png", currentName]];
         NMPanelMenuItem* menuItem2 = [[NMPanelMenuItem alloc] initFromNormalSprite:pane2 
                                                                     selectedSprite:pane2
                                                                       activeSprite:pane2
                                                                     disabledSprite:pane2
-                                                                              name:world.name
+                                                                              name:currentName
                                                                             target:self selector:@selector(levelPicked:)];
         menuItem2.world = i;
-        menuItem2.name = world.name;
+        menuItem2.name = currentName;
         [menu addChild: menuItem2];
         [menuItem2 release];
     }
 
-#ifdef LITE_VERSION
-    
-    // [self addLockPanelToMenu: menu];
-    NSUInteger randomIndex = arc4random() % 100;
-    NSString* paneName = randomIndex <= 50 ? @"locked-panel-camp" : @"locked-panel-dino";
-    CCSprite* pane    = [CCSprite spriteWithFile:[NSString stringWithFormat: @"%@.png",    paneName]];
-    CCSprite* pane_on = [CCSprite spriteWithFile:[NSString stringWithFormat: @"%@-on.png", paneName]];
-
-    NMPanelMenuItem* lockedItem = [[NMPanelMenuItem alloc] initFromNormalSprite:pane 
-                                                               selectedSprite:pane
-                                                                 activeSprite:pane_on
-                                                               disabledSprite:pane
-                                                                         name:@"blank"
-                                                                       target:self selector:@selector(lockPanelPicked:)];
-    lockedItem.showGlow = false;
-
-    [menu addChild: lockedItem];
-    // menuItem.position = ccp(menuItem.position.x, menuItem.position.y - 100);
-    [lockedItem release];
-
-#endif
-
-    // where you're at: get the locked panel to align vertically
-    // get it to work
-    // then add the last level buy now screen
-
     [menu alignItemsHorizontallyWithPadding:30.0];
     [panels addChild:menu];
 
-#ifdef LITE_VERSION
-    lockedItem.position = ccp(lockedItem.position.x, lockedItem.position.y - 7);
-#endif
-
-
-    // menu.anchorPoint = ccp(0,0);
-    // CCLOG(@"menu.x:%f menu.y:%f", menu.position.x, menu.position.y);
-    // menu.position = ccp(0, s.height/2);
-    // CCLOG(@"menu.x:%f menu.y:%f", menu.position.x, menu.position.y);
-
     int numberOfPages = [JSWorld numWorlds];
-
-#ifdef LITE_VERSION
-    numberOfPages += 1;
-#endif
 
     float onePanelWide = 363;
     //float padding = 15;
@@ -206,40 +159,6 @@
     [[CCDirector sharedDirector] replaceScene:[CCCrossFadeTransition transitionWithDuration:0.5 scene:[HSMenuScene scene]]];
 }
 
-- (void) addLockPanelToMenu:(NMPanelMenu*)menu
-{
-    NSString* paneName = @"locked-panel-camp";
-    CCSprite* pane    = [CCSprite spriteWithFile:[NSString stringWithFormat: @"%@.png",    paneName]];
-    CCSprite* pane_on = [CCSprite spriteWithFile:[NSString stringWithFormat: @"%@-on.png", paneName]];
-    self.currentLockPanelName = paneName;
-
-    NMPanelMenuItem* menuItem = [[NMPanelMenuItem alloc] initFromNormalSprite:pane 
-                                                               selectedSprite:pane
-                                                                 activeSprite:pane_on
-                                                               disabledSprite:pane
-                                                                         name:@"blank"
-                                                                       target:self selector:@selector(lockPanelPicked:)];
-
-    [menu addChild: menuItem];
-    // menuItem.position = ccp(menuItem.position.x, menuItem.position.y - 100);
-    [menuItem release];
-}
-
-- (void) lockPanelPicked: (id) sender {
-    CCLOG(@"buying!");
-
-#ifdef LITE_VERSION
-    NSArray *keys = [NSArray arrayWithObjects:@"image", nil];
-    NSArray *objects = [NSArray arrayWithObjects:self.currentLockPanelName, nil];
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
-    [FlurryAPI logEvent:@"LockPanelBuyNowPressed" withParameters:dictionary];
-#endif
-
-    [[JSNetworkManager manager] openFullVersionURL];
-}
-
-
-
 - (void) levelPicked: (id) sender 
 {
     // tmp
@@ -258,16 +177,13 @@
 - (void) visit {
     if(nextWorld_ > -1 && !transitioning_) {
         transitioning_ = YES;
-        GameController* gc = [GameController sharedGameController];
-        [gc setWorld:nextWorld_ level:0]; //maybe this cuold be an object to be slightly faster
-        [[CCDirector sharedDirector] replaceScene:[CCCrossFadeTransition transitionWithDuration:0.5 scene:[HSGameScene scene]]];
+        [[CCDirector sharedDirector] replaceScene:[CCCrossFadeTransition transitionWithDuration:0.5 scene:[GoBackScene scene]]];
     }
     [super visit];
 }
 
 - (void) onExit 
 {
-    CCLOG(@"=== removing view");
     [scrollView removeFromSuperview];
     [scrollViewContainer removeFromSuperview];
     [super onExit];
@@ -275,12 +191,6 @@
 
 - (void) dealloc
 {
-    self.currentLockPanelName = nil;
-    CCLOG(@"=== deallocing HSLevelSelectionScene2");
-    // [scrollView removeFromSuperview];
-    // [scrollViewContainer removeFromSuperview];
-
-    // [pageControl removeFromSuperview];
     [super dealloc];
 }
 @end

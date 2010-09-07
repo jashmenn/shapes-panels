@@ -14,17 +14,14 @@
 @class PreviewScrollContainerView;
 @class NMPanelMenu;
 
-// HSLevelSelectionScene Layer
-@interface HSLevelSelectionScene2 : CCLayer
+@interface HCUPPanelScene : CCLayer
 {
     int nextWorld_;
     BOOL transitioning_;
     CocosOverlayScrollView* scrollView;
     PreviewScrollContainerView* scrollViewContainer;
     UIPageControl* pageControl;
-    NSString* currentLockPanelName_;
 }
-@property(nonatomic,retain) NSString* currentLockPanelName;
 
 // returns a Scene that contains the HSLevelSelectionScene as the only child
 +(id) scene;

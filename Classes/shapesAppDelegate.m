@@ -8,14 +8,7 @@
 
 #import "shapesAppDelegate.h"
 #import "cocos2d.h"
-#import "HSMenuScene.h"
-#import "HSGameScene.h"
-#import "GameSoundManager.h"
-#import "JSWorld.h"
-#import "HSLevelSelectionScene.h"
 #import "HCUPPanelScene.h"
-
-
 
 @implementation shapesAppDelegate
 
@@ -39,75 +32,12 @@
     //
     // CC_DIRECTOR_INIT();
 
-#ifdef LITE_VERSION
-    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-    [FlurryAPI startSession:@"GJSNXELXLP5ER11HN391"];
-#endif
-
-
-// do	{																							
     window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self setupCocos2d];
-    // [self playIntroVideo];
-
 }
-
-- (void)playIntroVideo {
-
-    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"HiccupLogoShort" ofType:@"m4v"]];
-    MPMoviePlayerController *moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:url];
-
-    // Register to receive a notification when the movie has finished playing.
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(moviePlayBackDidFinish:)
-                                                 name:MPMoviePlayerPlaybackDidFinishNotification
-                                               object:moviePlayer];
-
-    if ([moviePlayer respondsToSelector:@selector(setFullscreen:animated:)]) {
-        // Use the new 3.2 style API
-        moviePlayer.controlStyle = MPMovieControlStyleNone;
-        moviePlayer.shouldAutoplay = YES;
-        // This does blows up in cocos2d, so we'll resize manually
-        // [moviePlayer setFullscreen:YES animated:YES];
-        [moviePlayer.view setTransform:CGAffineTransformMakeRotation((float)M_PI_2)];
-
-//        CGSize winSize = [[CCDirector sharedDirector] winSize];
-        CGSize winSize = CGSizeMake(480, 320); // hmm
-        moviePlayer.view.frame = CGRectMake(0, 0, winSize.height, winSize.width);	// width and height are swapped after rotation
-        [window addSubview:moviePlayer.view];
-//        [[[CCDirector sharedDirector] openGLView] addSubview:moviePlayer.view];
-    } else {
-        // Use the old 2.0 style API
-        moviePlayer.movieControlMode = MPMovieControlModeHidden;
-        [moviePlayer play];
-    }
-
-    [window makeKeyAndVisible];
-}
-
-- (void)moviePlayBackDidFinish:(NSNotification*)notification {
-    MPMoviePlayerController *moviePlayer = [notification object];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMoviePlayerPlaybackDidFinishNotification
-                                                  object:moviePlayer];
-
-    // If the moviePlayer.view was added to the openGL view, it needs to be removed
-    if ([moviePlayer respondsToSelector:@selector(setFullscreen:animated:)]) {
-        [moviePlayer.view removeFromSuperview];
-    }
-
-    [moviePlayer release];
-    CCLOG(@"DONE");
-//    [[CCDirector sharedDirector] replaceScene: [HSMenuScene scene]];
-}
-
 
 
 - (void) setupCocos2d {
-
-    //Kick off sound initialisation, this will happen in a separate thread
-    [[GameSoundManager sharedManager] setup];
-
     if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
           [CCDirector setDirectorType:kCCDirectorTypeNSTimer];
     CCDirector *__director = [CCDirector sharedDirector];
@@ -143,20 +73,7 @@
     // You can change anytime.
     [CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];	
 
-     // kick off level loading. todo figure out best place to do this
-    [JSWorld setup];
-    GameController* gc = [GameController sharedGameController];
-    [gc retain];
-
-    if([gc firstLaunch])
-      [[CCDirector sharedDirector] runWithScene: [HSIntroScene scene]];
-    els
-      [[CCDirector sharedDirector] runWithScene: [HSMenuScene scene]];
-
-    // [[CCDirector sharedDirector] runWithScene: [HSOptionsScene scene]];
-    // [[CCDirector sharedDirector] runWithScene: [HSLevelSelectionScene2 scene]];
-    // [[CCDirector sharedDirector] runWithScene: [HSGameScene scene]];
-    // [[CCDirector sharedDirector] runWithScene: [HSBuyNowSceneFlat scene]];
+    [[CCDirector sharedDirector] runWithScene: [HCUPPanelScene scene]];
 }
 
 
@@ -171,7 +88,6 @@
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
     NSLog(@"memory warning");
 	[[CCDirector sharedDirector] purgeCachedData];
-	// [[CCTextureCache sharedTextureCache] removeUnusedTextures];
 	[[CCTextureCache sharedTextureCache] removeAllTextures];
 }
 
@@ -192,17 +108,9 @@
 }
 
 - (void)dealloc {
-    [[GameController sharedGameController] release];
 	[[CCDirector sharedDirector] release];
 	[window release];
 	[super dealloc];
 }
-
-#ifdef LITE_VERSION
-void uncaughtExceptionHandler(NSException *exception) {
-    [FlurryAPI logError:@"Uncaught" message:@"Crash!" exception:exception];
-}  
-#endif
-
 
 @end

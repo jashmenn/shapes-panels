@@ -8,8 +8,6 @@
  */
 
 #include "NMPanelMenuItem.h"
-#import "GameSoundManager.h"
-#import "GameController.h"
 
 @interface NMPanelMenuItem (Private)
 @end
@@ -64,14 +62,7 @@
 -(void) activate
 {
     isActive_ = YES;
-    SimpleAudioEngine* soundEngine = [GameSoundManager sharedManager].soundEngine;
-	if(self.name && ![self.name isEqualToString:@"blank"]) {
-		GameController* gc = [GameController sharedGameController];
-		NSString* soundName = [NSString stringWithFormat:@"%@-%@.caf", gc.currentVoice, self.name];
-		[soundEngine playEffect:soundName pitch:1.0f pan:0.0f gain:1.0f];
-	} else {
-		[soundEngine playEffect:@"briefcase-click-1.caf" pitch:1.0f pan:0.0f gain:0.7f];
-	}
+    // play sound here
     [super activate];
 }
 

@@ -9,7 +9,6 @@
 
 #include "NMPanelMenu.h"
 #import "common.h"
-#import "NMPanelController.h"
 #import "NMPanelMenuItem.h"
 
 @interface NMPanelMenu (Private)
@@ -20,86 +19,7 @@
 
 - (void) onEnter {
     [super onEnter];
-    self.pc = [[NMPanelController alloc] initWithNode: self];
-    // todo, set contentSize to be the size of the children + padding
-
-    // CCLOG(@"we have %d children", [[self children] count]);
-    [pc definePanelsWithSprites: [[self children] getNSArray]];
-    // [pc setNodePositionToPanel: 0];
 }
-
-/*
-// the trick here is to give the PanelMenu a high touch priority than its items
-// and if the PanelMenu ignores the touch, only then do you let the items have the touch
-// in this way, you might not need any panel items at all
--(void) registerWithTouchDispatcher
-{
-    [[CCTouchDispatcher sharedDispatcher] 
-        addTargetedDelegate:self 
-                   priority:touchPriority_panelMenu 
-            swallowsTouches:YES];
-}
-
-- (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    return NO; // ******************* tmp
-    CCMenuItem* sprite = [self itemForTouch: touch];
-    if (sprite) { 
-        // [sprite selected];
-        return [pc ccTouchBegan:touch withEvent:event forSprite:sprite];
-    }
-    dragged = NO;
-    return NO;
-}
-
-- (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    CCMenuItem* sprite = [self itemForTouch: touch];
-    if (sprite) [pc ccTouchMoved:touch withEvent:event forSprite:sprite];
-    dragged = YES;
-}
-
-- (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    CCMenuItem* sprite = [self itemForTouch: touch];
-
-    // [sprite selected];
-
-    if(dragged) {
-        if (sprite) {
-            [pc ccTouchEnded:touch withEvent:event forSprite:sprite];
-            // [selectedItem unselected];
-            // [selectedItem activate];
-                        
-        }
-    } else {
-        [sprite selected];
-        [sprite activate];
-    }
-    dragged = NO;
-}
-*/
-
-
-- (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    CCLOG(@"ccTouchBegan NMPanelMenu");
-    return [super ccTouchBegan:touch withEvent:event];
-}
-
-- (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    CCLOG(@"ccTouchEnded NMPanelMenu");
-    [super ccTouchEnded:touch withEvent:event];
-}
-
-- (void)ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    CCLOG(@"ccTouchCancelled NMPanelMenu");
-    [super ccTouchCancelled:touch withEvent:event];
-}
-
-
 
 -(CGRect) rect
 {
@@ -159,12 +79,6 @@
     }
     return nil;
 }
-
-/*
--(void) setToPanel: (int) n {
-    [pc setNodePositionToPanel: n];
-}
-*/
 
 
 @end

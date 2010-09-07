@@ -30,6 +30,8 @@
 {
     if( (self=[super init] )) {
         transitioning_ = NO;
+        nextWorld_ = -1;
+
         // In the real world, you'd probably want to add all your panels to a
         // zwoptex sprite sheet. You could pre-load the frame cache with
         // something like this:
@@ -54,7 +56,7 @@
     // about each level.
     NSArray* panelNames = [NSArray arrayWithObjects: 
         @"amazon" @"arctic" @"brkfst" @"camp" @"city" nil;
-    int numPanels = [panelNames count];
+    int numberOfPages = [panelNames count];
 
     // create an empty layer for us to work with
     CCLayer* panels = [CCLayer node];
@@ -74,7 +76,7 @@
     NMPanelMenu* menu = [NMPanelMenu menuWithItems: menuItem1, nil];
 
     // Now add the rest of the panels
-    for(int i=1; i < numPanels; i++) {
+    for(int i=1; i < numberOfPages; i++) {
         NSString* currentName = [panelNames objectAtIndex:i];
         CCSprite* pane2 = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat: @"%@-panel.png", currentName]];
         NMPanelMenuItem* menuItem2 = [[NMPanelMenuItem alloc] initFromNormalSprite:pane2 
@@ -89,95 +91,69 @@
         [menuItem2 release];
     }
 
-    [menu alignItemsHorizontallyWithPadding:30.0];
-    [panels addChild:menu];
-
-    int numberOfPages = [JSWorld numWorlds];
-
+    // #define this somewhere. It is dependend on the size of your images.
     float onePanelWide = 363;
-    //float padding = 15;
-    float totalWidth = numberOfPages * onePanelWide; // panel width + padding * 2
+    float padding = 15;
+    float totalWidth = numberOfPages * onePanelWide; // (wait, do we need padding in here?)
 
+    // When the user returns to the panel scene, you may want the panel to be
+    // positioned on the level they left.  In Jacob's Shapes we use the
+    // GameController gc method currentWorld_i to indicate what level we are
+    // currently on. For the demo, we're just setting to 0
+    int currentWorldOffset = 0; // gc.currentWorld_i;
+
+    [menu alignItemsHorizontallyWithPadding: padding*2];
+
+    // add our panels layer
+    [panels addChild:menu];
     [self addChild:panels];
 
-    // 
-    GameController* gc = [GameController sharedGameController];
-    CCLOG(@"setting to panel: %d", gc.currentWorld_i+1);
-    CCLOG(@"menu.x:%f menu.y:%f", menu.position.x, menu.position.y);
-    // newMenuX =  
-    // menu.position = ccp(newMenuX, menu.position.y);
-    // [menu setToPanel: gc.currentWorld_i+1]; // ew
-    CCLOG(@"menu.x:%f menu.y:%f", menu.position.x, menu.position.y);
-    // float unknown = 70;
-    float unknown = 15;
-    // menu.position = ccp(totalWidth/2 + onePanelWide/2 - onePanelWide + unknown,  s.height/2);
-    // menu.position = ccpAdd(menu.position, ccp(totalWidth/2 - onePanelWide + unknown, 0));
-    int woff = gc.currentWorld_i;
-    // menu.position = ccpAdd(menu.position, ccp(totalWidth/2 - onePanelWide - (woff * onePanelWide) + unknown, 0));
-    // menu.position = ccpAdd(menu.position, ccp(totalWidth/2 - onePanelWide + unknown, 0)); // use this
-    menu.position = ccpAdd(menu.position, ccp(totalWidth/2 + unknown, 0));
-    // you need to scroll the scoll view container
+    menu.position = ccpAdd(menu.position, ccp(totalWidth/2 + padding, 0));
 
-
-    // Init Scrollview
-
-    // scrollView = [[CocosOverlayScrollView alloc] initWithFrame:CGRectMake(0, 0, 480, 320)];
-    // scrollView = [[CocosOverlayScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-
+    // Now we do two things: 
+    //
+    //   1. Add our CocosOverlayScrollView which is only one panel wide (less
+    //      than the whole screen). If we had this layer only then we wouldn't
+    //      be notified of touches on the edge of the screen.
+    //   2. We add the PreviewScrollContainerView which is full screen. The
+    //      PreviewScrollContainerView will delegate any touches it receives to
+    //      our paging scroll view
+    //      
+    // Note that we're only concerned with a horizontal iPhone. If your game is
+    // vertical, change accordingly
     scrollViewContainer = [[PreviewScrollContainerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-
     scrollView = [[CocosOverlayScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, onePanelWide)
-                                                      numPages: numberOfPages + 1
+                                                      numPages: numberOfPages
                                                          width: onePanelWide
                                                          layer: panels];
-
     scrollViewContainer.scrollView = scrollView;
 
-    // pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, 50, 480)];
-    // pageControl.numberOfPages = numberOfPages;
-    // pageControl.currentPage = 0;
-    // pageControl.delegate = scrollView;
-
-    [scrollView setContentOffset: CGPointMake(0, (woff + 1) * onePanelWide) animated: NO];
+    // this is just to pre-set the scroll view to a particular panel
+    [scrollView setContentOffset: CGPointMake(0, currentWorldOffset * onePanelWide) animated: NO];
 
     // Add Scrollview to cocos2d
     [[[CCDirector sharedDirector] openGLView] addSubview:scrollViewContainer];
     [[[CCDirector sharedDirector] openGLView] addSubview:scrollView];
-    // [[[CCDirector sharedDirector] openGLView] addSubview:pageControl];
-
-    // set to current level
-    // [scrollView setContentOffset: CGPointMake(woff * onePanelWide, s.height/2) animated: YES];
 
     [scrollView release];
     [scrollViewContainer release];
 
-    [super onEnter]; // ?
-}
-
-- (void) menuButtonPressed: (id) sender 
-{
-    [[CCDirector sharedDirector] replaceScene:[CCCrossFadeTransition transitionWithDuration:0.5 scene:[HSMenuScene scene]]];
+    [super onEnter];
 }
 
 - (void) levelPicked: (id) sender 
 {
-    // tmp
-    // [scrollView removeFromSuperview];
-    // [scrollViewContainer removeFromSuperview];
-
     CCLOG(@"world %@ %d picked", ((NMPanelMenuItem*)sender).name, ((NMPanelMenuItem*)sender).world);
     nextWorld_ = ((NMPanelMenuItem*)sender).world;
-    // if(false) {
-    //     GameController* gc = [GameController sharedGameController];
-    //     [gc setWorld:((NMPanelMenuItem*)sender).world level:0];
-    //     [[CCDirector sharedDirector] replaceScene:[CCCrossFadeTransition transitionWithDuration:0.5 scene:[HSGameScene scene]]];
-    // }    
+    // why do we do this? See #visit
 }
 
+// We want our panel "active" image to draw before we change scenes. This
+// allows us to draw the active image and then change scenes.
 - (void) visit {
     if(nextWorld_ > -1 && !transitioning_) {
         transitioning_ = YES;
-        [[CCDirector sharedDirector] replaceScene:[CCCrossFadeTransition transitionWithDuration:0.5 scene:[GoBackScene scene]]];
+        [[CCDirector sharedDirector] replaceScene:[CCCrossFadeTransition transitionWithDuration:0.5 scene:[HCUPPanelScene scene]]];
     }
     [super visit];
 }

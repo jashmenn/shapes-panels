@@ -1,0 +1,20 @@
+2010-08-24 07:35:18.638 JacobsShapes[11242:40b] touch at l.x:40.000000 l.y:96.000000
+2010-08-24 07:35:18.641 JacobsShapes[11242:40b] .
+2010-08-24 07:35:18.646 JacobsShapes[11242:40b] l.x:0.000000 l.y:0.000000
+2010-08-24 07:35:18.648 JacobsShapes[11242:40b] m.x:2811.000000 m.y:160.000000
+2010-08-24 07:35:18.648 JacobsShapes[11242:40b] touchLocation.x:40.000000 touchLocation.y:96.000000
+2010-08-24 07:35:18.649 JacobsShapes[11242:40b] gl-touchLocation.x:96.000000 gl-touchLocation.y:40.000000
+2010-08-24 07:35:18.649 JacobsShapes[11242:40b] blank gl-local.x:348.000000 gl-local.y:-6.500000
+2010-08-24 07:35:18.650 JacobsShapes[11242:40b] safari gl-local.x:0.000000 gl-local.y:8.000000
+
+
+2010-08-24 07:35:48.886 JacobsShapes[11242:40b] touch at l.x:47.000000 l.y:460.000000
+2010-08-24 07:35:48.894 JacobsShapes[11242:40b] .
+2010-08-24 07:35:48.897 JacobsShapes[11242:40b] l.x:-363.000000 l.y:-0.000000
+2010-08-24 07:35:48.900 JacobsShapes[11242:40b] m.x:2811.000000 m.y:160.000000
+2010-08-24 07:35:48.902 JacobsShapes[11242:40b] touchLocation.x:47.000000 touchLocation.y:460.000000
+2010-08-24 07:35:48.904 JacobsShapes[11242:40b] gl-touchLocation.x:460.000000 gl-touchLocation.y:47.000000
+2010-08-24 07:35:48.906 JacobsShapes[11242:40b] blank gl-local.x:1075.000000 gl-local.y:0.500000
+2010-08-24 07:35:48.907 JacobsShapes[11242:40b] safari gl-local.x:727.000000 gl-local.y:15.000000
+2010-08-24 07:35:48.910 JacobsShapes[11242:40b] city gl-local.x:364.000000 gl-local.y:15.000000
+2010-08-24 07:35:48.912 JacobsShapes[11242:40b] amazon gl-local.x:1.000000 gl-local.y:15.000000

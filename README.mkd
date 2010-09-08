@@ -25,6 +25,8 @@ that to delegate touches that lie outside the `UIScrollView`.
 
 There are a few custom classes mixed in, but that is the basic idea.
 
+![Panels Layers](http://github.com/jashmenn/shapes-panels/raw/master/Resources/shapes-panels-post.jpg)
+
 # Credits
 
 Written by Nate Murray for [Jacob's Shapes](http://www.littlehiccup.com), an

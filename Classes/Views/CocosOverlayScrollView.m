@@ -33,8 +33,8 @@
     if (!self.dragging)
     {
         UITouch* touch = [[touches allObjects] objectAtIndex:0];
-        //CGPoint location = [touch locationInView: [touch view]];
-        //CCLOG(@"touch at l.x:%f l.y:%f", location.x, location.y);
+        // CGPoint location = [touch locationInView: [touch view]];
+        // CCLOG(@"touch at l.x:%f l.y:%f", location.x, location.y);
 
         [self.nextResponder touchesBegan: touches withEvent:event];
         [[[CCDirector sharedDirector] openGLView] touchesBegan:touches withEvent:event];
@@ -74,20 +74,11 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGPoint dragPt = [scrollView contentOffset];
-
-    // CCScene* currentScene = [[CCDirector sharedDirector] runningScene];
-
-    // Only take the top layer to modify but other layers could be retrieved as well
-    //
-    // CCLayer* topLayer = (CCLayer *)[currentScene.children objectAtIndex:0];
-
-    //dragPt = [[CCDirector sharedDirector] convertCoordinate:dragPt];
     dragPt = [[CCDirector sharedDirector] convertToGL:dragPt];
 
     dragPt.y = dragPt.y * -1;
     dragPt.x = dragPt.x * -1;
 
-    // CGPoint newLayerPosition = CGPointMake(dragPt.x + (scrollView.contentSize.height * 0.5f), dragPt.y + (scrollView.contentSize.width * 0.5f));
     CGPoint newLayerPosition = CGPointMake(dragPt.x, dragPt.y);
 
     [targetLayer setPosition:newLayerPosition];
@@ -96,11 +87,11 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     // CGPoint dragPt = [scrollView contentOffset];
-
+    // etc.
 }
 
 -(void) dealloc {
-	self.targetLayer = nil;
+    self.targetLayer = nil;
     [super dealloc];
 }
 @end

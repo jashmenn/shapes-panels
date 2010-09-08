@@ -135,7 +135,9 @@
     // this is just to pre-set the scroll view to a particular panel
     [scrollView setContentOffset: CGPointMake(0, currentWorldOffset * onePanelWide) animated: NO];
 
-    // Add Scrollview to cocos2d
+    // Add views to cocos2d
+    // We called it a PreviewScrollContainerView, but it actually isn't containing anything at all.
+    // In reality it is just taking up any space under our ScrollView and delegating the touches. 
     [[[CCDirector sharedDirector] openGLView] addSubview:scrollViewContainer];
     [[[CCDirector sharedDirector] openGLView] addSubview:scrollView];
 

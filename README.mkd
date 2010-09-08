@@ -3,9 +3,9 @@
 This project shows how to create a paged UIScrollView with Previews
 in Cocos2D. It looks like this:
 
-!Resources/iphone-preview.jpg!
+![iPhone Preview](http://github.com/jashmenn/shapes-panels/raw/master/Resources/iphone-preview.jpg)
 
-[Watch the video!](youtube).
+[Watch the video!](http://www.youtube.com/watch?v=2IgbRzGfBHk&fmt=22).
 
 # The Problem
 
@@ -33,7 +33,7 @@ iPhone game for toddlers.
 
 It uses ideas and code from the following sites:
 
- *   http://getsetgames.com/2009/08/21/cocos2d-and-uiscrollview/
- *   http://blog.proculo.de/archives/180-Paging-enabled-UIScrollView-With-Previews.html
+ *   [http://getsetgames.com/2009/08/21/cocos2d-and-uiscrollview/](http://getsetgames.com/2009/08/21/cocos2d-and-uiscrollview/)
+ *   [http://blog.proculo.de/archives/180-Paging-enabled-UIScrollView-With-Previews.html](http://blog.proculo.de/archives/180-Paging-enabled-UIScrollView-With-Previews.html)
  
 

@@ -80,7 +80,7 @@
     // Now add the rest of the panels
     for(int i=1; i < numberOfPages; i++) {
         NSString* currentName = [panelNames objectAtIndex:i];
-        CCSprite* pane2 = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat: @"%@-panel.png", currentName]];
+        CCSprite* pane2 = [CCSprite spriteWithFile:[NSString stringWithFormat: @"%@-panel.png", currentName]];
         NMPanelMenuItem* menuItem2 = [[NMPanelMenuItem alloc] initFromNormalSprite:pane2 
                                                                     selectedSprite:pane2
                                                                       activeSprite:pane2
@@ -102,7 +102,8 @@
     // positioned on the level they left.  In Jacob's Shapes we use the
     // GameController gc method currentWorld_i to indicate what level we are
     // currently on. For the demo, we're just setting to 0
-    int currentWorldOffset = 0; // gc.currentWorld_i;
+    int currentWorldOffset = 0;    // current world number. 
+    // int currentWorldOffset = 1; // Try changing to 1 and see what happens
 
     [menu alignItemsHorizontallyWithPadding: padding*2];
 
@@ -110,7 +111,8 @@
     [panels addChild:menu];
     [self addChild:panels];
 
-    menu.position = ccpAdd(menu.position, ccp(totalWidth/2 + padding, 0));
+    // set the position of the menu to the center of the very first panel
+    menu.position = ccpAdd(menu.position, ccp(totalWidth/2 - onePanelWide/2, 0));
 
     // Now we do two things: 
     //

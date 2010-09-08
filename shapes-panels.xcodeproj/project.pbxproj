@@ -25,7 +25,6 @@
 		43F538E4123682CD00D74B1E /* city-panel.png in Resources */ = {isa = PBXBuildFile; fileRef = 43F538DD123682CD00D74B1E /* city-panel.png */; };
 		43F538E5123682CD00D74B1E /* frames-glow.png in Resources */ = {isa = PBXBuildFile; fileRef = 43F538DE123682CD00D74B1E /* frames-glow.png */; };
 		43F538E6123682CD00D74B1E /* paper-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 43F538DF123682CD00D74B1E /* paper-background.png */; };
-		43FAA155123716C60097CEBB /* HCUPPanels.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43FAA154123716C60097CEBB /* HCUPPanels.mm */; };
 		506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDB87102F4C4000A389B3 /* libz.dylib */; };
 		506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
 		50F414F11069373D002A0D5E /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F414ED1069373D002A0D5E /* fps_images.png */; };
@@ -559,8 +558,6 @@
 		43F538DD123682CD00D74B1E /* city-panel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "city-panel.png"; sourceTree = "<group>"; };
 		43F538DE123682CD00D74B1E /* frames-glow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frames-glow.png"; sourceTree = "<group>"; };
 		43F538DF123682CD00D74B1E /* paper-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paper-background.png"; sourceTree = "<group>"; };
-		43FAA153123716C60097CEBB /* HCUPPanels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCUPPanels.h; sourceTree = "<group>"; };
-		43FAA154123716C60097CEBB /* HCUPPanels.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HCUPPanels.mm; sourceTree = "<group>"; };
 		504DFC6810AF1739006D82FE /* LICENSE.cocos2d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.cocos2d; sourceTree = "<group>"; };
 		504DFC6910AF1739006D82FE /* LICENSE.cocosdenshion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.cocosdenshion; sourceTree = "<group>"; };
 		506EDB87102F4C4000A389B3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -676,8 +673,6 @@
 				43A94B5D1222B87D0030A3BA /* CocosOverlayScrollView.m */,
 				43D170D2122345AA0081657D /* TouchDelegatingView.h */,
 				43D170D3122345AA0081657D /* TouchDelegatingView.m */,
-				43FAA153123716C60097CEBB /* HCUPPanels.h */,
-				43FAA154123716C60097CEBB /* HCUPPanels.mm */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1335,7 +1330,6 @@
 				43A94B471222B5990030A3BA /* HCUPPanelScene.m in Sources */,
 				43A94B5E1222B87D0030A3BA /* CocosOverlayScrollView.m in Sources */,
 				43D170D4122345AA0081657D /* TouchDelegatingView.m in Sources */,
-				43FAA155123716C60097CEBB /* HCUPPanels.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

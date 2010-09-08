@@ -54,31 +54,19 @@
     // In your game this array would be created by a function that returns a
     // list of worlds. In Jacob's Shapes we have a GameController that knows
     // about each level.
-    NSArray* panelNames = [NSArray arrayWithObjects: @"amazon", @"arctic",
-        @"brkfst", @"camp", @"city", nil];
+    NSArray* panelNames = [NSArray arrayWithObjects: 
+        @"amazon", @"arctic",
+        @"brkfst", @"camp", 
+        @"city", nil];
     int numberOfPages = [panelNames count];
 
     // create an empty layer for us to work with
     CCLayer* panels = [CCLayer node];
 
-    // The easiest way to add to a CCMenu dynamically is to start with one panel 
-    // and then add more later. (Anyone have advice on a better way to do this?)
-    NSString *firstPanelName = [NSString stringWithFormat: @"%@-panel.png", [panelNames objectAtIndex:0]];
-    CCSprite* pane1 = [CCSprite spriteWithFile:firstPanelName];
-    NMPanelMenuItem* menuItem1 = [[NMPanelMenuItem alloc] initFromNormalSprite:pane1 
-                                                        selectedSprite:pane1 
-                                                          activeSprite:pane1
-                                                        disabledSprite:pane1
-                                                                  name:[panelNames objectAtIndex:0]
-                                                                target:self 
-                                                              selector:@selector(levelPicked:)];
-    menuItem1.world = 0;
-    menuItem1.name = [panelNames objectAtIndex:0];
-    NMPanelMenu* menu = [NMPanelMenu menuWithItems: menuItem1, nil];
-    [pane1 release];
+    NMPanelMenu* menu = [NMPanelMenu menuWithItems: nil];
 
-    // Now add the rest of the panels
-    for(int i=1; i < numberOfPages; i++) {
+    // Now add the panels
+    for(int i=0; i < numberOfPages; i++) {
         NSString* currentName = [panelNames objectAtIndex:i];
         CCSprite* pane2 = [CCSprite spriteWithFile:[NSString stringWithFormat: @"%@-panel.png", currentName]];
         NMPanelMenuItem* menuItem2 = [[NMPanelMenuItem alloc] initFromNormalSprite:pane2 

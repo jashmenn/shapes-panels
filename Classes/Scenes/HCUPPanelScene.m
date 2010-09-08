@@ -11,7 +11,6 @@
 #import "NMPanelMenu.h"
 #import "NMPanelMenuItem.h"
 #import "PreviewScrollContainerView.h"
-#import "GoBackScene.h"
 
 // http://getsetgames.com/2009/08/21/cocos2d-and-uiscrollview/
 // http://blog.proculo.de/archives/180-Paging-enabled-UIScrollView-With-Previews.html

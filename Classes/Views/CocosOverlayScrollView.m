@@ -11,6 +11,7 @@
 @implementation CocosOverlayScrollView
 @synthesize targetLayer;
 
+// Configure your favorite UIScrollView options here
 -(id) initWithFrame: (CGRect) frameRect numPages: (int) numPages width: (float) width layer: (CCNode*) layer {
     if ((self = [super initWithFrame: frameRect])){ 
         self.contentSize = CGSizeMake(320, width * numPages);

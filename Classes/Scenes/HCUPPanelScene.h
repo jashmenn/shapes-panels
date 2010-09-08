@@ -11,7 +11,7 @@
 #import "cocos2d.h"
 #import "CocosOverlayScrollView.h"
 
-@class PreviewScrollContainerView;
+@class TouchDelegatingView;
 @class NMPanelMenu;
 
 @interface HCUPPanelScene : CCLayer
@@ -19,7 +19,7 @@
     int nextWorld_;
     BOOL transitioning_;
     CocosOverlayScrollView* scrollView;
-    PreviewScrollContainerView* scrollViewContainer;
+    TouchDelegatingView* scrollViewContainer;
     UIPageControl* pageControl;
 }
 

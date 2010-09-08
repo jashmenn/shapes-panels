@@ -1,5 +1,5 @@
 //
-//  PreviewScrollContainerView.h
+//  TouchDelegatingView.h
 //  shapes
 //
 //  Created by Nate Murray on 8/23/10.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CocosOverLayScrollView.h"
 
-@interface PreviewScrollContainerView : UIView {
+@interface TouchDelegatingView : UIView {
     // UIPageControl* pageControl;
     CocosOverlayScrollView* scrollView;
 }

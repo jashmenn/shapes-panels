@@ -10,7 +10,7 @@
 #include "HCUPPanelScene.h"
 #import "NMPanelMenu.h"
 #import "NMPanelMenuItem.h"
-#import "PreviewScrollContainerView.h"
+#import "TouchDelegatingView.h"
 
 // http://getsetgames.com/2009/08/21/cocos2d-and-uiscrollview/
 // http://blog.proculo.de/archives/180-Paging-enabled-UIScrollView-With-Previews.html
@@ -63,6 +63,7 @@
     CCLayer* panels = [CCLayer node];
 
     NMPanelMenu* menu = [NMPanelMenu menuWithItems: nil];
+    float onePanelWide = -1;
 
     // Now add the panels
     for(int i=0; i < numberOfPages; i++) {
@@ -78,12 +79,14 @@
         menuItem2.name = currentName;
         [menu addChild: menuItem2];
         [menuItem2 release];
+        // set onePanelWide to be the width of the first panel
+        if(i==0) onePanelWide = [pane2 textureRect].size.width;
     }
 
     // #define this somewhere. It is dependend on the size of your images.
-    float onePanelWide = 363;
     float padding = 15;
-    float totalWidth = numberOfPages * onePanelWide; // (wait, do we need padding in here?)
+    float totalPanelWidth = onePanelWide + padding*2;
+    float totalWidth = numberOfPages * totalPanelWidth; // (wait, do we need padding in here?)
 
     // When the user returns to the panel scene, you may want the panel to be
     // positioned on the level they left.  In Jacob's Shapes we use the
@@ -99,31 +102,31 @@
     [self addChild:panels];
 
     // set the position of the menu to the center of the very first panel
-    menu.position = ccpAdd(menu.position, ccp(totalWidth/2 - onePanelWide/2, 0));
+    menu.position = ccpAdd(menu.position, ccp(totalWidth/2 - totalPanelWidth/2, 0));
 
     // Now we do two things: 
     //
     //   1. Add our CocosOverlayScrollView which is only one panel wide (less
     //      than the whole screen). If we had this layer only then we wouldn't
     //      be notified of touches on the edge of the screen.
-    //   2. We add the PreviewScrollContainerView which is full screen. The
-    //      PreviewScrollContainerView will delegate any touches it receives to
+    //   2. We add the TouchDelegatingView which is full screen. The
+    //      TouchDelegatingView will delegate any touches it receives to
     //      our paging scroll view
     //      
     // Note that we're only concerned with a horizontal iPhone. If your game is
     // vertical, change accordingly
-    scrollViewContainer = [[PreviewScrollContainerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-    scrollView = [[CocosOverlayScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, onePanelWide)
+    scrollViewContainer = [[TouchDelegatingView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+    scrollView = [[CocosOverlayScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, totalPanelWidth)
                                                       numPages: numberOfPages
-                                                         width: onePanelWide
+                                                         width: totalPanelWidth
                                                          layer: panels];
     scrollViewContainer.scrollView = scrollView;
 
     // this is just to pre-set the scroll view to a particular panel
-    [scrollView setContentOffset: CGPointMake(0, currentWorldOffset * onePanelWide) animated: NO];
+    [scrollView setContentOffset: CGPointMake(0, currentWorldOffset * totalPanelWidth) animated: NO];
 
     // Add views to cocos2d
-    // We called it a PreviewScrollContainerView, but it actually isn't containing anything at all.
+    // We called it a TouchDelegatingView, but it actually isn't containing anything at all.
     // In reality it is just taking up any space under our ScrollView and delegating the touches. 
     [[[CCDirector sharedDirector] openGLView] addSubview:scrollViewContainer];
     [[[CCDirector sharedDirector] openGLView] addSubview:scrollView];

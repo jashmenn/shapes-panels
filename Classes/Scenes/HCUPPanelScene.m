@@ -153,13 +153,14 @@
 }
 
 // We want our panel "active" image to draw before we change scenes. This
-// allows us to draw the active image and then change scenes.
+// allows us to draw the active image and then change scenes. It feels a bit
+// hacky, but the result is a snappier experience for the user.
 - (void) visit {
+    [super visit];
     if(nextWorld_ > -1 && !transitioning_) {
         transitioning_ = YES;
         [[CCDirector sharedDirector] replaceScene:[CCCrossFadeTransition transitionWithDuration:0.5 scene:[HCUPPanelScene scene]]];
     }
-    [super visit];
 }
 
 - (void) onExit 

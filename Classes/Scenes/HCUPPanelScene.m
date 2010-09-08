@@ -1,20 +1,19 @@
 /*
- *  HSLevelSelectionScene2.m
- *  shapes
+ *  HCUPPanelScene.m
+ *  Jacob's Shapes
  *
  *  Created by Nate Murray on 7/24/10.
- *  Copyright 2010 YetiApps. All rights reserved.
+ *  Copyright 2010 LittleHiccup. All rights reserved.
  *
+ * Huge thanks to the the authors of following urls:
+ *   http://getsetgames.com/2009/08/21/cocos2d-and-uiscrollview/
+ *   http://blog.proculo.de/archives/180-Paging-enabled-UIScrollView-With-Previews.html
  */
 
 #include "HCUPPanelScene.h"
 #import "NMPanelMenu.h"
 #import "NMPanelMenuItem.h"
 #import "TouchDelegatingView.h"
-
-// http://getsetgames.com/2009/08/21/cocos2d-and-uiscrollview/
-// http://blog.proculo.de/archives/180-Paging-enabled-UIScrollView-With-Previews.html
-
 @implementation HCUPPanelScene
 
 +(id) scene
@@ -115,12 +114,12 @@
     //      
     // Note that we're only concerned with a horizontal iPhone. If your game is
     // vertical, change accordingly
-    scrollViewContainer = [[TouchDelegatingView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+    touchDelegatingView = [[TouchDelegatingView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
     scrollView = [[CocosOverlayScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, totalPanelWidth)
                                                       numPages: numberOfPages
                                                          width: totalPanelWidth
                                                          layer: panels];
-    scrollViewContainer.scrollView = scrollView;
+    touchDelegatingView.scrollView = scrollView;
 
     // this is just to pre-set the scroll view to a particular panel
     [scrollView setContentOffset: CGPointMake(0, currentWorldOffset * totalPanelWidth) animated: NO];
@@ -128,11 +127,11 @@
     // Add views to cocos2d
     // We called it a TouchDelegatingView, but it actually isn't containing anything at all.
     // In reality it is just taking up any space under our ScrollView and delegating the touches. 
-    [[[CCDirector sharedDirector] openGLView] addSubview:scrollViewContainer];
+    [[[CCDirector sharedDirector] openGLView] addSubview:touchDelegatingView];
     [[[CCDirector sharedDirector] openGLView] addSubview:scrollView];
 
     [scrollView release];
-    [scrollViewContainer release];
+    [touchDelegatingView release];
 
     [super onEnter];
 }
@@ -158,7 +157,7 @@
 - (void) onExit 
 {
     [scrollView removeFromSuperview];
-    [scrollViewContainer removeFromSuperview];
+    [touchDelegatingView removeFromSuperview];
     [super onExit];
 }
 

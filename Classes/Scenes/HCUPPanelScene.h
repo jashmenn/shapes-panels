@@ -19,7 +19,7 @@
     int nextWorld_;
     BOOL transitioning_;
     CocosOverlayScrollView* scrollView;
-    TouchDelegatingView* scrollViewContainer;
+    TouchDelegatingView* touchDelegatingView;
     UIPageControl* pageControl;
 }
 

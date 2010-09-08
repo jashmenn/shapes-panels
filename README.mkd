@@ -1,0 +1,39 @@
+# Paging UIScrollView with Previews in Cocos2D
+
+This project shows how to create a paged UIScrollView with Previews
+in Cocos2D. It looks like this:
+
+!Resources/iphone-preview.jpg!
+
+[Watch the video!](youtube).
+
+# The Problem
+
+Apple's UIScrollView paging doesn't support an arbitrary width argument. If you
+make a UIScrollView with a width smaller than the whole screen, then that view
+won't capture touches outside of that area.
+
+Additionally, we are mixing Cocoa views and Cocos2d/OpenGL, and how they interact is
+not always obvious.  
+
+# Basic Idea
+
+We create a subclass of `CCMenu` and add panels as items. The `CCMenu` is scrolled
+as the `UIScrollView` is scrolled. The `UIScrollView` is set to be smaller than
+the whole screen: this gives us previews on either side of the current page.
+We create a full-screen `TouchDelegatingView` under the `UIScrollView` and use
+that to delegate touches that lie outside the `UIScrollView`.
+
+There are a few custom classes mixed in, but that is the basic idea.
+
+# Credits
+
+Written by Nate Murray for [Jacob's Shapes](http://www.littlehiccup.com), an
+iPhone game for toddlers.
+
+It uses ideas and code from the following sites:
+
+ *   http://getsetgames.com/2009/08/21/cocos2d-and-uiscrollview/
+ *   http://blog.proculo.de/archives/180-Paging-enabled-UIScrollView-With-Previews.html
+ 
+

@@ -13,6 +13,7 @@
 		433BD84A1201C73F0025525E /* NMPanelMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 433BD8491201C73F0025525E /* NMPanelMenuItem.m */; };
 		434F461C11FB2F9400603A4D /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 434F45A311FB2F6A00603A4D /* libcocos2d.a */; };
 		4365CA5C120A6AFB00E598B9 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4365CA5B120A6AFB00E598B9 /* MediaPlayer.framework */; };
+		436AEF9A1243C3C70010824E /* PLBlocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 436AEF991243C3C70010824E /* PLBlocks.framework */; };
 		4379A70B12125BBA00256487 /* libFontLabel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 434F45AB11FB2F6A00603A4D /* libFontLabel.a */; };
 		43A94B471222B5990030A3BA /* HCUPPanelScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A94B461222B5990030A3BA /* HCUPPanelScene.m */; };
 		43A94B5E1222B87D0030A3BA /* CocosOverlayScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A94B5D1222B87D0030A3BA /* CocosOverlayScrollView.m */; };
@@ -543,6 +544,7 @@
 		433BD8491201C73F0025525E /* NMPanelMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMPanelMenuItem.m; sourceTree = "<group>"; };
 		434F449111FB2F6100603A4D /* cocos2d-iphone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "cocos2d-iphone.xcodeproj"; sourceTree = COCOS2D_SRC; };
 		4365CA5B120A6AFB00E598B9 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		436AEF991243C3C70010824E /* PLBlocks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PLBlocks.framework; path = Frameworks/PLBlocks.framework; sourceTree = "<group>"; };
 		436B00F011FFB124007B2F00 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SynthesizeSingleton.h; path = Classes/Other/SynthesizeSingleton.h; sourceTree = "<group>"; };
 		43A94B451222B5990030A3BA /* HCUPPanelScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCUPPanelScene.h; sourceTree = "<group>"; };
 		43A94B461222B5990030A3BA /* HCUPPanelScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCUPPanelScene.m; sourceTree = "<group>"; };
@@ -592,6 +594,7 @@
 				506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */,
 				506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */,
 				4365CA5C120A6AFB00E598B9 /* MediaPlayer.framework in Frameworks */,
+				436AEF9A1243C3C70010824E /* PLBlocks.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -634,6 +637,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				436AEF991243C3C70010824E /* PLBlocks.framework */,
 				4365CA5B120A6AFB00E598B9 /* MediaPlayer.framework */,
 				DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */,
 				DCCBF1B80F6022AE0040855A /* Foundation.framework */,
@@ -1375,6 +1379,10 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1402,6 +1410,10 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = shapes_Prefix.pch;
@@ -1433,15 +1445,16 @@
 				);
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
+				GCC_VERSION = coop.plausible.blocks.compilers.gcc.4_2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PROFILING_CODE = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				PRODUCT_DISPLAY_NAME = "Panels Example";
 				PRODUCT_NAME = PanelsExample;
-				SDKROOT = iphonesimulator4.0;
+				SDKROOT = iphoneos4.1;
 			};
 			name = Debug;
 		};
@@ -1455,14 +1468,15 @@
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
 				GCC_UNROLL_LOOPS = YES;
+				GCC_VERSION = coop.plausible.blocks.compilers.gcc.4_2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				PREBINDING = NO;
 				PRODUCT_DISPLAY_NAME = "Panels Example";
 				PRODUCT_NAME = PanelsExample;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "900B900D-7DCE-4A81-ABB9-70869F87CB96";
-				SDKROOT = iphoneos3.2;
+				SDKROOT = iphoneos4.1;
 			};
 			name = Release;
 		};

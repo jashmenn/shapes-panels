@@ -27,6 +27,18 @@ There are a few custom classes mixed in, but that is the basic idea.
 
 ![Panels Layers](http://github.com/jashmenn/shapes-panels/raw/master/Resources/shapes-panels-post.jpg)
 
+# Setup
+
+This project uses cocos2d as a referenced project. You can see that in 
+
+    Project > Edit Project Settings > User Header Search Paths
+
+we have the environment variable `$(COCOS2D_SRC)`. You set up this variable in:
+
+    Xcode > Preferences > Source Trees 
+
+Then hit the plus '+' and add a variable `COCOS2D_SRC` to point to your cocos2d installation.
+
 # Credits
 
 Written by Nate Murray for [Jacob's Shapes](http://www.littlehiccup.com), an

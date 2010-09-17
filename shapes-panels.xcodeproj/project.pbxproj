@@ -1455,6 +1455,7 @@
 				PRODUCT_DISPLAY_NAME = "Panels Example";
 				PRODUCT_NAME = PanelsExample;
 				SDKROOT = iphoneos4.1;
+				USER_HEADER_SEARCH_PATHS = "$(COCOS2D_SRC)/**";
 			};
 			name = Debug;
 		};
@@ -1477,6 +1478,7 @@
 				PRODUCT_NAME = PanelsExample;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "900B900D-7DCE-4A81-ABB9-70869F87CB96";
 				SDKROOT = iphoneos4.1;
+				USER_HEADER_SEARCH_PATHS = "$(COCOS2D_SRC)/**";
 			};
 			name = Release;
 		};

@@ -25,6 +25,7 @@
         [self setUserInteractionEnabled:TRUE];
         [self setScrollEnabled:TRUE];
         self.targetLayer = layer;
+        // self.canCancelContentTouches  = YES;
     }
     return self;
 }
@@ -57,12 +58,12 @@
 
 -(void) touchesCancelled: (NSSet *) touches withEvent: (UIEvent *) event
 {
-    if (!self.dragging)
-    {
+    // if (!self.dragging)
+    // {
+        // CCLOG(@"CocosOverlayScrollView touchesEnded not dragging");
         [self.nextResponder touchesCancelled: touches withEvent:event];
         [[[CCDirector sharedDirector] openGLView] touchesCancelled:touches withEvent:event];
-    }
-
+    // }
     [super touchesCancelled: touches withEvent: event];
 }
 

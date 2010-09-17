@@ -30,31 +30,31 @@
             selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite 
               activeSprite:(CCNode<CCRGBAProtocol>*)activeSprite 
             disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite 
-					  name:(NSString*)name
+                      name:(NSString*)name
                     target:(id)target selector:(SEL)selector
 {
     if( (self=[super initFromNormalSprite:normalSprite 
-            selectedSprite:selectedSprite 
-            disabledSprite:disabledSprite 
-                    target:target selector:selector]))
+                           selectedSprite:selectedSprite 
+                           disabledSprite:disabledSprite 
+                                   target:target selector:selector]))
     {
         self.activeImage = activeSprite;
-		self.name = name;
+        self.name = name;
 
-		CCSpriteFrameCache* fcache = [CCSpriteFrameCache sharedSpriteFrameCache];
-		NSString* glowName = @"frames-glow.png";
-       if([fcache spriteFrameByName: glowName]) {
-       } else {
-			// todo, move this to extensions once it works
-			CCTexture2D* glowTex = [[CCTexture2D alloc] initWithImage: [UIImage imageNamed:glowName]];
-			CCSpriteFrame* spriteFrame = [[CCSpriteFrame alloc] initWithTexture:glowTex 
-			   rect:CGRectMake(0,0,glowTex.pixelsWide,glowTex.pixelsHigh) offset: ccp(0,0)];
-			[fcache addSpriteFrame:spriteFrame name:glowName];
-			[spriteFrame release];
-			[glowTex release];
-       }
-	   self.glow = [CCSprite spriteWithSpriteFrameName:glowName];
-       self.showGlow = true;
+        // TODO, create an addSpriteFrameByName extension 
+        CCSpriteFrameCache* fcache = [CCSpriteFrameCache sharedSpriteFrameCache];
+        NSString* glowName = @"frames-glow.png";
+        if([fcache spriteFrameByName: glowName]) {
+        } else {
+            CCTexture2D* glowTex = [[CCTexture2D alloc] initWithImage: [UIImage imageNamed:glowName]];
+            CCSpriteFrame* spriteFrame = [[CCSpriteFrame alloc] initWithTexture:glowTex 
+                                                                           rect:CGRectMake(0,0,glowTex.pixelsWide,glowTex.pixelsHigh) offset: ccp(0,0)];
+            [fcache addSpriteFrame:spriteFrame name:glowName];
+            [spriteFrame release];
+            [glowTex release];
+        }
+        self.glow = [CCSprite spriteWithSpriteFrameName:glowName];
+        self.showGlow = true;
     }
     return self;
 }

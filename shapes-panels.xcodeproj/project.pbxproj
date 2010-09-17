@@ -652,7 +652,6 @@
 			isa = PBXGroup;
 			children = (
 				433BD7D61201C6B60025525E /* Views */,
-				43E9C7C311FF2A5A000CA26E /* Controllers */,
 				43D92D9811FDD8FB0055D2D5 /* Models */,
 				434F465111FB317300603A4D /* Scenes */,
 				43D92D7C11FDD3E80055D2D5 /* common.h */,
@@ -778,13 +777,6 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		43E9C7C311FF2A5A000CA26E /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		50F414EB1069373D002A0D5E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -832,7 +824,14 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "shapes-panels" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
 			projectReferences = (

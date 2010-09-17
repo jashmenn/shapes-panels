@@ -37,3 +37,7 @@ It uses ideas and code from the following sites:
  *   [http://getsetgames.com/2009/08/21/cocos2d-and-uiscrollview/](http://getsetgames.com/2009/08/21/cocos2d-and-uiscrollview/)
  *   [http://blog.proculo.de/archives/180-Paging-enabled-UIScrollView-With-Previews.html](http://blog.proculo.de/archives/180-Paging-enabled-UIScrollView-With-Previews.html)
  
+
+# CHANGELOG
+
+2010-09-17 - fixed how ios 4.1 deals with canceling touches

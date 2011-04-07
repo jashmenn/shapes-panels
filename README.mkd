@@ -2,7 +2,7 @@
 
 This project shows how to create a paged UIScrollView with Previews
 in Cocos2D. It looks like this ([video](http://www.youtube.com/watch?v=2IgbRzGfBHk&fmt=22))
-![iPhone Preview](http://github.com/jashmenn/shapes-panels/raw/master/Resources/iphone-preview.jpg)
+![iPhone Preview](https://github.com/jashmenn/shapes-panels/raw/master/Resources/iphone-preview.jpg)
 
 [Watch the video!](http://www.youtube.com/watch?v=2IgbRzGfBHk&fmt=22)
 
@@ -25,7 +25,7 @@ that to delegate touches that lie outside the `UIScrollView`.
 
 There are a few custom classes mixed in, but that is the basic idea.
 
-![Panels Layers](http://github.com/jashmenn/shapes-panels/raw/master/Resources/shapes-panels-post.jpg)
+![Panels Layers](https://github.com/jashmenn/shapes-panels/raw/master/Resources/shapes-panels-post.jpg)
 
 # Setup
 

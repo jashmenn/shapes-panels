@@ -69,9 +69,9 @@
         NSString* currentName = [panelNames objectAtIndex:i];
         CCSprite* pane2 = [CCSprite spriteWithFile:[NSString stringWithFormat: @"%@-panel.png", currentName]];
         NMPanelMenuItem* menuItem2 = [[NMPanelMenuItem alloc] initFromNormalSprite:pane2 
-                                                                    selectedSprite:pane2
-                                                                      activeSprite:pane2
-                                                                    disabledSprite:pane2
+                                                                    selectedSprite:nil
+                                                                      activeSprite:nil
+                                                                    disabledSprite:nil
                                                                               name:currentName
                                                                             target:self selector:@selector(levelPicked:)];
         menuItem2.world = i;
@@ -150,7 +150,7 @@
     [super visit];
     if(nextWorld_ > -1 && !transitioning_) {
         transitioning_ = YES;
-        [[CCDirector sharedDirector] replaceScene:[CCCrossFadeTransition transitionWithDuration:0.5 scene:[HCUPPanelScene scene]]];
+        [[CCDirector sharedDirector] replaceScene:[CCTransitionCrossFade transitionWithDuration:0.5 scene:[HCUPPanelScene scene]]];
     }
 }
 

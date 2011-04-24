@@ -34,7 +34,7 @@
 {
     if (!self.dragging)
     {
-        UITouch* touch = [[touches allObjects] objectAtIndex:0];
+        // UITouch* touch = [[touches allObjects] objectAtIndex:0];
         // CGPoint location = [touch locationInView: [touch view]];
         // CCLOG(@"touch at l.x:%f l.y:%f", location.x, location.y);
 

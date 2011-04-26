@@ -149,7 +149,9 @@ enum {
 
 -(CCMenuItem *) itemForTouch: (UITouch *) touch
 {
-	CGPoint touchLocation = [touch locationInView: [touch view]];
+    // cocos2d 1.0 rc bug when using with additional overlayed views (such as UIScrollView).
+    // CGPoint touchLocation = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
+	CGPoint touchLocation = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	
 	CCMenuItem* item;

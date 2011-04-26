@@ -865,14 +865,18 @@
 
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
 {
-	CGPoint point = [touch locationInView: [touch view]];
+    // cocos2d 1.0 rc bug when using with additional overlayed views (such as UIScrollView).
+    // CGPoint touchLocation = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
+	CGPoint point = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpace:point];
 }
 
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch
 {
-	CGPoint point = [touch locationInView: [touch view]];
+    // cocos2d 1.0 rc bug when using with additional overlayed views (such as UIScrollView).
+    // CGPoint touchLocation = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
+	CGPoint point = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpaceAR:point];
 }

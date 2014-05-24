@@ -46,8 +46,8 @@
     [__director setAnimationInterval:1.0/60];
     EAGLView *__glView = [EAGLView viewWithFrame:[window bounds]
                                      pixelFormat:kEAGLColorFormatRGB565
-                                     depthFormat:0 /* GL_DEPTH_COMPONENT24_OES */
-                              preserveBackbuffer:NO];
+                                     depthFormat:0 /* GL_DEPTH_COMPONENT24_OES */];
+    //                              preserveBackbuffer:NO];
     [__director setOpenGLView:__glView];
     [window addSubview:__glView];
     [window makeKeyAndVisible];

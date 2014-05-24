@@ -34,11 +34,12 @@
 {
     if (!self.dragging)
     {
-        UITouch* touch = [[touches allObjects] objectAtIndex:0];
+        // UITouch* touch = [[touches allObjects] objectAtIndex:0];
         // CGPoint location = [touch locationInView: [touch view]];
         // CCLOG(@"touch at l.x:%f l.y:%f", location.x, location.y);
 
-        [self.nextResponder touchesBegan: touches withEvent:event];
+        // Propagating touches to nextResponder not needed
+        //[self.nextResponder touchesBegan: touches withEvent:event];
         [[[CCDirector sharedDirector] openGLView] touchesBegan:touches withEvent:event];
     }
 
@@ -49,7 +50,8 @@
 {
     if (!self.dragging)
     {
-        [self.nextResponder touchesEnded: touches withEvent:event];
+        // Propagating touches to nextResponder not needed
+        //[self.nextResponder touchesEnded: touches withEvent:event];
         [[[CCDirector sharedDirector] openGLView] touchesEnded:touches withEvent:event];
     }
 
@@ -61,7 +63,8 @@
     // if (!self.dragging)
     // {
         // CCLOG(@"CocosOverlayScrollView touchesEnded not dragging");
-        [self.nextResponder touchesCancelled: touches withEvent:event];
+        // Propagating touches to nextResponder not needed    
+    [self.nextResponder touchesCancelled: touches withEvent:event];
         [[[CCDirector sharedDirector] openGLView] touchesCancelled:touches withEvent:event];
     // }
     [super touchesCancelled: touches withEvent: event];
